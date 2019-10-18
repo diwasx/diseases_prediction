@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Evaluation Form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <style>
+        html, body {
+            min-height: 100%;
+            background-image: linear-gradient(to left, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
+        }
+        body, div, form, input, p { 
+            padding: 0;
+            margin: 0;
+            outline: none;
+            font-family: Roboto, Arial, sans-serif;
+            font-size: 14px;
+            color: #666;
+            line-height: 22px;
+            background-image: linear-gradient(to left, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
+        }
+        form {
+            width: 100%;
+            padding: 20px;
+            box-shadow: 0 2px 5px #ccc; 
+            background: #fff;
+            background-image: linear-gradient(to left, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
+        }
+        button {
+            width: 150px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px; 
+            background: #095484;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            }
+            button:hover {
+            background: #0666a3;
+        }
+    </style>
+</head>
+
+  <body>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="train_data">TRAIN DATA</button>
+    </form>
+
+    <form method="post">
+        <div>
+            {% for d in data %}
+            <div class="user_pod">
+                <input type="checkbox" name={{ d.0 }}> {{ d.1 }}<br>
+            </div>
+            {% endfor %}
+            <br>
+            <button type="submit" name="predict_disease">PREDICT DISEASE</button>
+        </div>
+    </form>
