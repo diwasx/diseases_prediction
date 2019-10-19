@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Course Evaluation Form</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <style>
         html, body {
@@ -48,11 +47,10 @@
     </form>
 
     <form method="post">
+        {% csrf_token %}
         <div>
             {% for d in data %}
-            <div class="user_pod">
-                <input type="checkbox" name={{ d.0 }}> {{ d.1 }}<br>
-            </div>
+            <input type="checkbox" name="checks[]" value="{{d.0}}"> {{ d.1 }}<br>
             {% endfor %}
             <br>
             <button type="submit" name="predict_disease">PREDICT DISEASE</button>

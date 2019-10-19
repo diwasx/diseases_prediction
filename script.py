@@ -49,8 +49,8 @@ def training():
                 # print(disease_list.index(i))
                 targetVec[disease_list.index(i)-1] = 1
 
-                print("INPUT IS \n",inputVec)
-                print("TARGET IS \n",targetVec)
+                # print("INPUT IS \n",inputVec)
+                # print("TARGET IS \n",targetVec)
                 nn.trainSVLearing(inputVec,targetVec,learningRate)
                 tmpInd = ind
 
@@ -65,9 +65,9 @@ def training():
         vecInd = symptom_list_filter.index(k)
         # print(vecInd)
         inputVec[vecInd] += 1
-    print("INPUT IS \n",inputVec)
+    # print("INPUT IS \n",inputVec)
     targetVec[-1:] = 1
-    print("TARGET IS \n",targetVec)
+    # print("TARGET IS \n",targetVec)
     nn.trainSVLearing(inputVec,targetVec,learningRate)
     print("------- TRAINING COMPLETE -------")
 
@@ -87,10 +87,25 @@ def getData():
         # print(i[0])
         top_symptom.append(i[0])
     # print(top_symptom)
-
-    for i in range(len(top_symptom)):
-        print (top_symptom[i])
     return(top_symptom)
 
+def predict(checked_list):
+    # print("This is predicting function")
+    # print(checked_list)
+    inputVec = np.zeros(shape=(402,1))
+    for item in checked_list:
+        # print (item)
+        ind = symptom_list_filter.index(item)
+        # print(ind)
+        inputVec[ind]=1
+    # print(inputVec)
+    result = nn.feedForward(inputVec)
+    maxVal_pos = result.argmax(axis=0)
+    print(maxVal_pos)
+    print(result[maxVal_pos])
+    predicted_disease = disease_list[int(maxVal_pos)]
+    print(predicted_disease)
+    
+        
 # training()
-getData()
+# getData()
