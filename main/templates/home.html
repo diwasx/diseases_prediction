@@ -90,8 +90,7 @@
         <input type="hidden" name="symptoms_field" id="symptoms_field" value="" />
 
         <div class="text-center">
-            <button type="submit" name="predict_disease" id="singlebutton" class="btn btn-primary">Predict Disease</button> 
-            <!-- <button type="submit" name="predict_disease" onclick="passData()" id="singlebutton" class="btn btn-primary">Predict Disease</button> --> 
+            <button type="submit" name="predict_disease" id="singlebutton" class="btn btn-primary">PREDICT DISEASE</button> 
         </div>
     </form>
 
@@ -104,14 +103,11 @@
         function symptom_onChange(value){
             symptoms_set.add(value)
             let symptoms_list = Array.from(symptoms_set);
-
             symptoms_list_name = []
             symptoms_list.forEach(item => {
                 str = item.split("_").pop()
                 symptoms_list_name.push(str)
             });
-            <!-- console.log(symptoms_list) -->
-            <!-- console.log(symptoms_list_name) -->
 
             var app = document.querySelector('#symptoms_select_list');
             app.innerHTML = '<ul>' + symptoms_list_name.map(function (symptoms_list_name) {

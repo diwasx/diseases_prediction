@@ -29,7 +29,6 @@ def sigmoid(x):
         else:
             # Original sigmoid function
             tmpMatrix[i][0] = 1/(1+math.exp(-x[i][0]))
-    # print(tmpMatrix)
     return (tmpMatrix)
 
 # Function return derivative value of sigmoid function for all element of matrix
@@ -211,7 +210,6 @@ class NeuralNetwork:
                 x2, y2 = 390/self.scaleFac, yStartTmp+yTmp+40
                 xhc, yhc = (x1+x2)/2, (y1+y2)/2
                 weight = self.weightsHid[n][m]
-                # print(weight)
                 if(weight > 0):
                     color = "red";
                 else:
@@ -247,7 +245,6 @@ class NeuralNetwork:
                 x2, y2 = 690/self.scaleFac, yStartTmp+yTmp+40
                 xoc, yoc = (x1+x2)/2, (y1+y2)/2
                 weight = self.weightsOut[n][m]
-                # print(weight)
                 if(weight > 0):
                     color = "red";
                 else:
@@ -316,7 +313,6 @@ class NeuralNetwork:
                 x2, y2 = 390/self.scaleFac, yStartTmp+yTmp+40
                 xhc, yhc = (x1+x2)/2, (y1+y2)/2
                 weight = self.weightsHid[n][m]
-                # print(weight)
                 if(weight > 0):
                     color = "red";
                 else:
@@ -354,7 +350,6 @@ class NeuralNetwork:
                 x2, y2 = 690/self.scaleFac, yStartTmp+yTmp+40
                 xoc, yoc = (x1+x2)/2, (y1+y2)/2
                 weight = self.weightsOut[n][m]
-                # print(weight)
                 if(weight > 0):
                     color = "red";
                 else:

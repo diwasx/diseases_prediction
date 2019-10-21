@@ -28,12 +28,15 @@ symptom_list_filter = list(set(symptom_list))
 # print(symptom_list_filter)
 # print(occurance_list)
 
+#-- Prepare Input and target vector and feed it to NN for training --#
 def training():
     print("Training Data Started")
 
-    #-- Prepare Input and target vector and feed it to NN for training --#
-    # All inputs and target except last one
-    for loop in range(70):
+    # No of times data set is training to NN
+    loop = 70
+    for l in range(loop):
+        # All inputs and target except last one
+        print(str(int(l/70*100))+"% completed")
         tmpInput = df.Disease.to_list()
         tmpInd = 0
         for i in tmpInput:
@@ -43,16 +46,10 @@ def training():
                 ind = tmpInput.index(i)
                 if (ind != 0):
                     inputList = symptom_list[tmpInd:ind]
-                    # print (inputList)
                     for k in inputList:
                         vecInd = symptom_list_filter.index(k)
                         inputVec[vecInd] += 1
-                    # print(inputVec,"\n")
-                    # print(disease_list.index(i))
                     targetVec[disease_list.index(i)-1] = 1
-
-                    # print("INPUT IS \n",inputVec)
-                    # print("TARGET IS \n",targetVec)
                     nn.trainSVLearing(inputVec,targetVec,learningRate)
                     tmpInd = ind
 
@@ -61,68 +58,42 @@ def training():
         targetVec = np.zeros(shape=(134,1))
         j = len(symptom_list)
         inputList = symptom_list[tmpInd:j]
-        # print(inputList)
         for k in inputList:
-            # print(k)
             vecInd = symptom_list_filter.index(k)
-            # print(vecInd)
             inputVec[vecInd] += 1
-        # print("INPUT IS \n",inputVec)
         targetVec[-1:] = 1
-        # print("TARGET IS \n",targetVec)
         nn.trainSVLearing(inputVec,targetVec,learningRate)
     print("------- TRAINING COMPLETE -------")
 
 def getData():
-    # print(disease_list)
-    # print(symptom_list)
-    # print(symptom_list_filter)
-    # print(occurance_list)
-
+    # Function that generates common symptoms and pass it as well 
+    # all the symptoms from data set
     from collections import Counter
     c = Counter(symptom_list) 
+
     # Select only first 20
     words = c.most_common(20)
-    # print(words)
     top_symptom = []
     for i in words:
-        # print(i[0])
         top_symptom.append(i[0])
-    # print(top_symptom)
     return(top_symptom,symptom_list_filter)
 
 def predict(checked_list):
-    # print("This is predicting function")
-    # print(checked_list)
     inputVec = np.zeros(shape=(402,1))
     for item in checked_list:
-        # print (item)
         if(item!=""):
             ind = symptom_list_filter.index(item)
-            # print(ind)
             inputVec[ind]=1
-    # print(inputVec)
     result = nn.feedForward(inputVec)
     result_norm = [float(i)/sum(result) for i in result]
-    # result_norm = [float(i)/max(result) for i in result]
-    # print(result_norm)
-
-    # print("\nTop values")
     top_prediction = nlargest(8, enumerate(result_norm), key=lambda x: x[1])
-    # print(top_prediction,"\n")
-
-    # predicted_values = []
     predicted_values = [[0 for x in range(8)] for y in range(0)] 
     for i in top_prediction:
         tmp = disease_list[i[0]]
         dis = tmp.split('_', 1)[-1]
-        # print(dis)
         percent = float(i[1])*100
         per = "%.5f" % percent + " %"
-        # print(per)
-        # predicted_values.append(dis,per)
         predicted_values.append([dis,per])
-    # print(predicted_values)
     return predicted_values
         
 # training()

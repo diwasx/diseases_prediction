@@ -1,13 +1,5 @@
-# REQUIREMENTS
-pandas
-xlrd
-
-## To do ##
---> Web Interface
-
 # points: 
 Train disease accordance to its occurance
 
 # REFERENCES
 http://people.dbmi.columbia.edu/~friedma/Projects/DiseaseSymptomKB/index.html
-

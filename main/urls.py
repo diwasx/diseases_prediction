@@ -5,5 +5,4 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    # url(r'^external', views.external, name='script'),
 ]
