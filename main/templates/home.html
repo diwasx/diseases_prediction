@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
+{% load static %}
 <head>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'bootstrap-select.min.css' %}" rel="stylesheet">
     <style>
         html, body {
             min-height: 100%;
@@ -48,11 +50,89 @@
 
     <form method="post">
         {% csrf_token %}
-        <div>
-            {% for d in data %}
-            <input type="checkbox" name="checks[]" value="{{d.0}}"> {{ d.1 }}<br>
-            {% endfor %}
-            <br>
-            <button type="submit" name="predict_disease">PREDICT DISEASE</button>
+        <div class="row">
+                <div class="col-sm-3">
+                    <h3>Most common symptoms</h3>
+                    <div>
+                        {% for d in data %}
+                        <input type="checkbox" name="checks[]" value="{{d.0}}"> {{ d.1 }}<br>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="row-fluid">
+                        <h3>Manually enter symptoms</h3>
+                        <select class="selectpicker" data-show-subtext="true" data-live-search="true" onChange="symptom_onChange(this.value)">
+                            <option></option>
+                            {% for d in data1 %}
+                                <option value="{{d.0}}">{{d.1}}</option>
+                            {% endfor %}
+                        </select>
+                        <div id='symptoms_select_list'></div>
+                    </div>
+                </div>
+
+                <div class="col-sm-5">
+                    <h3>Predicted Diseases</h3>
+                    <div class="row">
+                        <div class="col-sm-12" style="background-color:lavender;">
+                            <ul>
+                                {% for d in predicted_diseases %}
+                                <li>{{d.0}} ({{d.1}})</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        <input type="hidden" name="symptoms_field" id="symptoms_field" value="" />
+
+        <div class="text-center">
+            <button type="submit" name="predict_disease" id="singlebutton" class="btn btn-primary">Predict Disease</button> 
+            <!-- <button type="submit" name="predict_disease" onclick="passData()" id="singlebutton" class="btn btn-primary">Predict Disease</button> --> 
         </div>
     </form>
+
+  </body>
+    <script src="{% static 'jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+    <script src="{% static 'bootstrap-select.min.js' %}"></script>
+    <script>
+        let symptoms_set = new Set();
+        function symptom_onChange(value){
+            symptoms_set.add(value)
+            let symptoms_list = Array.from(symptoms_set);
+
+            symptoms_list_name = []
+            symptoms_list.forEach(item => {
+                str = item.split("_").pop()
+                symptoms_list_name.push(str)
+            });
+            <!-- console.log(symptoms_list) -->
+            <!-- console.log(symptoms_list_name) -->
+
+            var app = document.querySelector('#symptoms_select_list');
+            app.innerHTML = '<ul>' + symptoms_list_name.map(function (symptoms_list_name) {
+                return '<li>' + symptoms_list_name + '<span class="close">&times;</span></li>';
+            }).join('') + '</ul>';
+
+            var closebtns = document.getElementsByClassName("close");
+            var i;
+            for (i = 0; i < closebtns.length; i++) {
+                closebtns[i].addEventListener("click", function() {
+                    str = this.parentElement.firstChild.data
+                    this.parentElement.style.display = 'none';
+
+                    var index = symptoms_list_name.indexOf(str);
+                    value = symptoms_list[index]
+                    symptoms_set.delete(value)
+                    console.log(symptoms_set)
+                });
+            }
+            document.getElementById('symptoms_field').value = symptoms_list
+        }
+    </script>
+
+</html>
