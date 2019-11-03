@@ -4,7 +4,7 @@
 import random
 import math
 import sys
-from tkinter import * 
+# from tkinter import * 
 import numpy as np
 
 class bcolors:
@@ -48,11 +48,11 @@ class NeuralNetwork:
 
         self.scaleFac = 1
         self.gapVal = 200
-        self.tk = Tk()
-        self.tk.title("Drawing_float")
+        # self.tk = Tk()
+        # self.tk.title("Drawing_float")
         widthSize = 800
         heightSize = 700
-        self.canvas = Canvas(self.tk, width=widthSize, height=heightSize)
+        # self.canvas = Canvas(self.tk, width=widthSize, height=heightSize)
 
         # Creating weights and assiging random values
         # Weights for Hidden
@@ -243,8 +243,8 @@ class NeuralNetwork:
             y = y  + self.gapVal
 
         # while True:
-        self.tk.after(frameSpeed, self.tk.update()) 
-        return (self.tk)
+        # self.tk.after(frameSpeed, self.tk.update()) 
+        # return (self.tk)
 
     def trainSVLearingVisualization(self,inputs,targets,learningRate):
         # Best view upto 18 nodes
@@ -347,9 +347,9 @@ class NeuralNetwork:
             # Gaps
             y = y  + self.gapVal
 
-        self.tk.after(frameSpeed, self.tk.update()) 
-        self.trainSVLearing(inputs,targets,learningRate)
-        return (self.tk)
+        # self.tk.after(frameSpeed, self.tk.update()) 
+        # self.trainSVLearing(inputs,targets,learningRate)
+        # return (self.tk)
 
     # For Neuro Evolution
     def copy(self):
