@@ -1,3 +1,6 @@
 django
 pandas
 xlrd
+gunicorn
+django-heroku
+
