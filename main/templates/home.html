@@ -1,100 +1,101 @@
 <!DOCTYPE html>
 <html>
-{% load static %}
-<head>
-    <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'bootstrap-select.min.css' %}" rel="stylesheet">
-    <style>
-        html, body {
-            min-height: 100%;
-            background-image: linear-gradient(to left, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
-        }
-        body, div, form, input, p { 
-            padding: 0;
-            margin: 0;
-            outline: none;
-            font-family: Roboto, Arial, sans-serif;
-            font-size: 14px;
-            color: #666;
-            line-height: 22px;
-            background-image: linear-gradient(to left, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
-        }
-        form {
-            width: 100%;
-            padding: 20px;
-            box-shadow: 0 2px 5px #ccc; 
-            background: #fff;
-            background-image: linear-gradient(to left, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
-        }
-        button {
-            width: 150px;
-            padding: 10px;
-            border: none;
-            border-radius: 5px; 
-            background: #095484;
-            font-size: 16px;
-            color: #fff;
-            cursor: pointer;
+    {% load static %}
+    <head>
+        <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'bootstrap-select.min.css' %}" rel="stylesheet">
+        <style>
+            html, body {
+                min-height: 100%;
+                background-image: linear-gradient(to left, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
             }
-            button:hover {
-            background: #0666a3;
-        }
-    </style>
-</head>
+            body, div, form, input, p { 
+                padding: 0;
+                margin: 0;
+                outline: none;
+                font-family: Roboto, Arial, sans-serif;
+                font-size: 14px;
+                color: #666;
+                line-height: 22px;
+                background-image: linear-gradient(to left, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
+            }
+            form {
+                width: 100%;
+                padding: 20px;
+                box-shadow: 0 2px 5px #ccc; 
+                background: #fff;
+                background-image: linear-gradient(to left, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
+            }
+            button {
+                width: 150px;
+                padding: 10px;
+                border: none;
+                border-radius: 5px; 
+                background: #095484;
+                font-size: 16px;
+                color: #fff;
+                cursor: pointer;
+                }
+                button:hover {
+                background: #0666a3;
+            }
+        </style>
+    </head>
 
-  <body>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit" name="train_data">TRAIN DATA</button>
-    </form>
+    <body>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="train_data">TRAIN DATA</button>
+        </form>
 
-    <form method="post">
-        {% csrf_token %}
-        <div class="row">
-                <div class="col-sm-3">
-                    <h3>Most common symptoms</h3>
-                    <div>
-                        {% for d in data %}
-                        <input type="checkbox" name="checks[]" value="{{d.0}}"> {{ d.1 }}<br>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="col-sm-4">
-                    <div class="row-fluid">
-                        <h3>Manually enter symptoms</h3>
-                        <select class="selectpicker" data-show-subtext="true" data-live-search="true" onChange="symptom_onChange(this.value)">
-                            <option></option>
-                            {% for d in data1 %}
-                                <option value="{{d.0}}">{{d.1}}</option>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                    <div class="col-sm-3">
+                        <h3>Most common symptoms</h3>
+                        <div>
+                            {% for d in data %}
+                            <input type="checkbox" name="checks[]" value="{{d.0}}"> {{ d.1 }}<br>
                             {% endfor %}
-                        </select>
-                        <div id='symptoms_select_list'></div>
-                    </div>
-                </div>
-
-                <div class="col-sm-5">
-                    <h3>Predicted Diseases</h3>
-                    <div class="row">
-                        <div class="col-sm-12" style="background-color:lavender;">
-                            <ul>
-                                {% for d in predicted_diseases %}
-                                <li>{{d.0}} ({{d.1}})</li>
-                                {% endfor %}
-                            </ul>
                         </div>
                     </div>
-                </div>
-        </div>
 
-        <input type="hidden" name="symptoms_field" id="symptoms_field" value="" />
+                    <div class="col-sm-4">
+                        <div class="row-fluid">
+                            <h3>Manually enter symptoms</h3>
+                            <select class="selectpicker" data-show-subtext="true" data-live-search="true" onChange="symptom_onChange(this.value)">
+                                <option></option>
+                                {% for d in data1 %}
+                                    <option value="{{d.0}}">{{d.1}}</option>
+                                {% endfor %}
+                            </select>
+                            <div id='symptoms_select_list'></div>
+                        </div>
+                    </div>
 
-        <div class="text-center">
-            <button type="submit" name="predict_disease" id="singlebutton" class="btn btn-primary">PREDICT DISEASE</button> 
-        </div>
-    </form>
+                    <div class="col-sm-5">
+                        <h3>Predicted Diseases</h3>
+                        <div class="row">
+                            <div class="col-sm-12" style="background-color:lavender;">
+                                <ul>
+                                    {% for d in predicted_diseases %}
+                                    <li>{{d.0}} ({{d.1}})</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+            </div>
 
-  </body>
+            <input type="hidden" name="symptoms_field" id="symptoms_field" value="" />
+
+            <div class="text-center">
+                <button type="submit" name="predict_disease" id="singlebutton" class="btn btn-primary">PREDICT DISEASE</button> 
+            </div>
+        </form>
+
+    </body>
+
     <script src="{% static 'jquery-3.4.1.js' %}"></script>
     <script src="{% static 'bootstrap.min.js' %}"></script>
     <script src="{% static 'bootstrap-select.min.js' %}"></script>

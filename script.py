@@ -33,7 +33,7 @@ def training():
     print("Training Data Started")
 
     # No of times data set is training to NN
-    loop = 70
+    loop = 50
     for l in range(loop):
         # All inputs and target except last one
         print(str(int(l/70*100))+"% completed")
