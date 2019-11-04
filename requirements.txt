@@ -3,4 +3,3 @@ pandas
 xlrd
 gunicorn
 django-heroku
-
