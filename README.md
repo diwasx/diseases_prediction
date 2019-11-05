@@ -13,5 +13,5 @@ Web interface for diseases prediction that uses:
 git clone https://github.com/diwasx/diseases_prediction
 cd diseases_prediction 
 pip3 install -r requirements.txt --user
-./manage.py runserver
+python manage.py runserver
 ```

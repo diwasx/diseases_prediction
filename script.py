@@ -36,7 +36,7 @@ def training():
     loop = 50
     for l in range(loop):
         # All inputs and target except last one
-        print(str(int(l/70*100))+"% completed")
+        print(str(int(l/loop*100))+"% completed")
         tmpInput = df.Disease.to_list()
         tmpInd = 0
         for i in tmpInput:
